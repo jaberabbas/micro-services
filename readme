@@ -1,4 +1,5 @@
 ------Create Images and Deploy to Docker Desktop----
+
 -run Docker Desktop
 -Create Dockerfiles for Each Service
 	user-service/Dockerfile
@@ -20,6 +21,7 @@ String orderServiceUrl = "http://order-service:8082/orders/" + userId;
 	http://localhost:9090/orders/1
 
 ----Push images to Docker Hub-----
+
 -docker login
 -tag the images (tag will be latest)
 docker tag user-service:latest jaberabbas/user-service:latest
