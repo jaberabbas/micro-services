@@ -1,4 +1,5 @@
 ------Create Images and Deploy to Docker Desktop----
+
 -run Docker Desktop
 -Create Dockerfiles for Each Service
 	user-service/Dockerfile
