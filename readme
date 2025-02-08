@@ -1,3 +1,4 @@
+------Create Images and Deploy to Docker Desktop----
 -run Docker Desktop
 -Create Dockerfiles for Each Service
 	user-service/Dockerfile
@@ -18,7 +19,7 @@ String orderServiceUrl = "http://order-service:8082/orders/" + userId;
 	http://localhost:8080/users/1/orders
 	http://localhost:9090/orders/1
 
--push images to Docker Hub by following the below steps:
+----Push images to Docker Hub-----
 -docker login
 -tag the images (tag will be latest)
 docker tag user-service:latest jaberabbas/user-service:latest
@@ -28,7 +29,7 @@ docker tag order-service:latest jaberabbas/order-service:latest
 docker push jaberabbas/user-service:latest
 docker push jaberabbas/order-service:latest
 
--now you can use these images in to deploy to kubernetes cluster:
+------Deploy to kubernetes cluster----------
 
 -create an AKS Azure cluster (in the US to have enough space)
 -login to azure
