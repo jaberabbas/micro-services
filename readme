@@ -1,0 +1,65 @@
+-run Docker Desktop
+-Create Dockerfiles for Each Service
+	user-service/Dockerfile
+	order-service/Dockerfile
+-build jar files of each mService:
+	mvn clean package
+-build Docker images:
+	docker build -t user-service:latest .
+	docker build -t order-service:latest .
+-create a docker compose file:
+	docker-compose.yml
+-update service URL in the user-service service
+String orderServiceUrl = "http://order-service:8082/orders/" + userId;
+-start the services:
+	docker-compose up
+-check Docker Desktop
+-test using
+	http://localhost:8080/users/1/orders
+	http://localhost:9090/orders/1
+
+-push images to Docker Hub by following the below steps:
+-docker login
+-tag the images (tag will be latest)
+docker tag user-service:latest jaberabbas/user-service:latest
+docker tag order-service:latest jaberabbas/order-service:latest
+
+-push images to Docker
+docker push jaberabbas/user-service:latest
+docker push jaberabbas/order-service:latest
+
+-now you can use these images in to deploy to kubernetes cluster:
+
+-create an AKS Azure cluster (in the US to have enough space)
+-login to azure
+	az login
+-Set the context for kubectl to point to your AKS cluster:
+	az aks get-credentials --resource-group <ResourceGroupName> --name <AKSClusterName>
+-Create Kubernetes Deployment YAML Files:
+	user-service/user-service-deployment.yaml
+	order-service/order-service-deployment.yaml
+-deploymentkubectl apply -f microservice1-deployment.yaml
+	kubectl apply -f user-service-deployment.yaml
+	kubectl apply -f order-deployment.yaml
+
+-Verify the Deployment
+	kubectl get deployments
+	kubectl get pods
+	kubectl get services
+
+-Access to your mservices:
+	C:\Users\j\workspace\Java\mservices\user-service>kubectl get services
+	NAME            TYPE           CLUSTER-IP    EXTERNAL-IP      PORT(S)          AGE
+	kubernetes      ClusterIP      10.0.0.1      <none>           443/TCP          21m
+	order-service   LoadBalancer   10.0.144.93   172.179.61.236   9090:32488/TCP   6m34s
+	user-service    LoadBalancer   10.0.182.22   172.179.62.93    8080:31764/TCP   86s
+-Use the external IP to access your microservices:
+http://172.179.62.93:8080/users/2/orders
+http://172.179.61.236:9090/orders/1
+-voilà, it works and it is done
+
+
+
+
+
+
