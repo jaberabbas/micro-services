@@ -31,7 +31,7 @@ docker tag order-service:latest jaberabbas/order-service:latest
 docker push jaberabbas/user-service:latest
 docker push jaberabbas/order-service:latest
 
-------Deploy to kubernetes cluster----------
+------Deploy to kubernetes cluster in Azure AKS----------
 
 -create an AKS Azure cluster (in the US to have enough space)
 -login to azure
@@ -62,7 +62,34 @@ http://172.179.61.236:9090/orders/1
 -voilà, it works and it is done
 
 
+------deploy to kubernetes cluster in AWS Eks-----
 
+-Install eksctl
+    https://eksctl.io/installation/
+    download to C:\Users\j\workspace\eksctl_Windows_amd64
+    add path to environments system path
+-create a cluster by running the below command. It will take few minutes to complete:
+   eksctl create cluster \
+    --name my-eks-cluster \
+    --region us-west-2 \
+    --nodegroup-name my-nodes \
+    --node-type t3.medium \
+    --nodes 3
 
+-Once the cluster is created, kubectl will automatically be configured to point to your EKS cluster. Verify this:
+    kubectl get nodes
+-deploy using the same kubernetes deployment files that we used for azure
+    kubectl apply -f user-service-deployment.yaml
+    kubectl apply -f order-service-deployment.yaml
+
+-verify deployments:
+    kubectl get deployments
+    kubectl get pods
+    kubectl get services
+    kubectl get services
+-test them using the below links:
+http://a43d2f50b270b4276b2d522345cf6ba3-292010522.us-west-2.elb.amazonaws.com:8080/users/1/orders
+http://a470f8a185c4e4b3781f09adccc2a5d7-1279462193.us-west-2.elb.amazonaws.com:9090/orders/1
+-they both worked fine
 
 
